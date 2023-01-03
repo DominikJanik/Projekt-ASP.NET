@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SnowmobileShop.Models.Snowmobile>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+
+<div class="row py-5">
+    @foreach (var snowmobile in Model)
+    {
+
+        <div class="col-lg-3 col-md-6 col-12 mb-4">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+
+                    <a class="d-flex flex-column h-100 p-5 pb-3 text-black text-shadow-1 text-decoration-none" asp-action="Details" asp-route-id="@snowmobile.Id">
+                        <img class="my-auto" src="@snowmobile.ImageUrl" alt="@snowmobile.Name image" />
+                        <h3 class="text-center display-6 fw-bold m-0 mb-2">@snowmobile.Name</h3>
+                        <ul class="d-flex list-unstyled justify-content-around">
+                            <li class="d-flex align-items-center me-3">
+                                <small class="text-success">Available</small>
+                            </li>
+                            <li class="d-flex align-items-center me-3">
+                                <small>1h</small>
+                            </li>
+                            <li class="d-flex align-items-center me-3">
+                                <small>$150</small>
+                            </li>
+                        </ul>
+                    </a>
+                
+            </div>
+        </div>
+    }
+</div>
