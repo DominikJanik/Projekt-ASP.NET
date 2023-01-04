@@ -1,0 +1,17 @@
+﻿@model SnowmobileShop.Models.SnowmobileType
+
+<form method="post">
+    <div class="row justify-content-center my-2">
+        <div class="col-6">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input readonly asp-for="Name"  type="text" class="form-control">
+            <span asp-validation-for="Name"></span>
+        </div>
+    </div>
+    <div class="row justify-content-center my-2">
+        <div class="col-6">
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+        </div>
+    </div>
+</form>

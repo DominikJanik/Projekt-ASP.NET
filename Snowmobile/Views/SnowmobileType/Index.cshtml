@@ -1,0 +1,24 @@
+﻿@model IEnumerable<SnowmobileShop.Models.SnowmobileType>
+
+<div class="row">
+    <div class="col-12">
+        <a asp-action="Create" class="btn btn-success mb-4">Create</a>
+
+        <ul class="list-group">
+            @foreach (var type in Model)
+            {
+                <li class="list-group-item list-group-item-action">
+                    <div class="row">
+                        <div class="col-6">
+                            @type.Name
+                        </div>
+                        <div class="col-6 text-end">
+                            <a asp-action="Edit" asp-route-id="@type.Id" class="btn btn-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@type.Id" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
