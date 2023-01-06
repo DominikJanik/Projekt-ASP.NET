@@ -1,0 +1,33 @@
+﻿@using SnowmobileShop.Models;
+@model IEnumerable<Trip>
+
+<div class="row">
+    <div class="col-12">
+        <a asp-action="Create" class="btn btn-success mb-4">Create</a>
+
+        @if (Model.Count() > 0)
+        {
+            <div class="list-group list-group-checkable w-auto">
+                @foreach (var trip in Model)
+                {
+                    <div class="list-group-item rounded-3 py-3">
+                        <div class="row">
+                            <div class="col-6">
+                                @trip.Name <br />
+                                <span class="d-block small text-muted text-success">@trip.Price.ToString("c")</span>
+                            </div>
+                            <div class="col-6 text-end">
+                                <a asp-action="Edit" asp-route-id="@trip.Id" class="btn btn-warning">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@trip.Id" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>There are no trips in the database!</p>
+        }
+    </div>
+</div>
