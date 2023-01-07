@@ -1,0 +1,65 @@
+﻿@using SnowmobileShop.Models;
+@model ShoppingCart
+
+@if (Model != null && Model.Lines.Count() > 0)
+{
+    <div class="row">
+        <div class="col-12">
+            <h2>Your cart</h2>
+            <table class="table table-light table-stripped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Rental info</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var line in Model.Lines)
+                    {
+                        <tr>
+                            <td>@line.Quantity</td>
+                            <td>@line.Product.Name</td>
+                            <td>@line.Product.Price.ToString("c")</td>
+                            <td>@($"Day: {line.RentalTime.RentalDay.Date} From: {line.RentalTime.From} To: {line.RentalTime.To}")</td>
+                            <td>
+                                <form asp-action="RemoveFromCart" method="post">
+                                    <input type="hidden" name="productId" value="@line.Product.Id" />
+                                    <input type="hidden" name="timeId" value="@line.RentalTime.Id" />
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" style="text-align: right;"><b>Total:</b></td>
+                        <td><b>@Model.TotalPrice.ToString("c")</b></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div style="float: right;">
+                <a class="btn btn-dark" asp-controller="Home" asp-action="Index">Continue shopping</a>
+                <a class="btn btn-success" asp-action="Index" asp-controller="Order">Checkout</a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-12">
+            <h2>Your cart</h2>
+            <p>your cart is empty</p>
+        </div>
+    </div>
+}
+
