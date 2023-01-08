@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SnowmobileShop.Data;
 
@@ -10,44 +11,65 @@ using SnowmobileShop.Data;
 namespace SnowmobileShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230126172252_AddTrips")]
+    partial class AddTrips
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
 
-            modelBuilder.Entity("SnowmobileShop.Models.Order", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
+                    b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Forename")
-                        .IsRequired()
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Surname")
-                        .IsRequired()
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("IdentityUser");
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.Product", b =>
@@ -70,90 +92,6 @@ namespace SnowmobileShop.Migrations
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("SnowmobileShop.Models.ProductLine", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RentalTimeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("ShoppingCartId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("RentalTimeId");
-
-                    b.HasIndex("ShoppingCartId");
-
-                    b.ToTable("ProductLines");
-                });
-
-            modelBuilder.Entity("SnowmobileShop.Models.RentalDay", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("RentalDays");
-                });
-
-            modelBuilder.Entity("SnowmobileShop.Models.RentalTime", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("DayId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<TimeOnly>("From")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsReserved")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RentalDayId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<TimeOnly>("To")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RentalDayId");
-
-                    b.ToTable("RentalHours");
-                });
-
             modelBuilder.Entity("SnowmobileShop.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
@@ -168,7 +106,33 @@ namespace SnowmobileShop.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("ShoppingCarts");
+                });
+
+            modelBuilder.Entity("SnowmobileShop.Models.ShoppingCartLine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ShoppingCartId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ShoppingCartId");
+
+                    b.ToTable("ShoppingCartLines");
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.SnowmobileType", b =>
@@ -246,21 +210,20 @@ namespace SnowmobileShop.Migrations
                     b.ToTable("Trips", (string)null);
                 });
 
-            modelBuilder.Entity("SnowmobileShop.Models.ProductLine", b =>
+            modelBuilder.Entity("SnowmobileShop.Models.ShoppingCart", b =>
                 {
-                    b.HasOne("SnowmobileShop.Models.Order", null)
-                        .WithMany("ProductLines")
-                        .HasForeignKey("OrderId");
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SnowmobileShop.Models.ShoppingCartLine", b =>
+                {
                     b.HasOne("SnowmobileShop.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SnowmobileShop.Models.RentalTime", "RentalTime")
-                        .WithMany()
-                        .HasForeignKey("RentalTimeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -269,30 +232,6 @@ namespace SnowmobileShop.Migrations
                         .HasForeignKey("ShoppingCartId");
 
                     b.Navigation("Product");
-
-                    b.Navigation("RentalTime");
-                });
-
-            modelBuilder.Entity("SnowmobileShop.Models.RentalDay", b =>
-                {
-                    b.HasOne("SnowmobileShop.Models.Product", "Product")
-                        .WithMany("RentalDays")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("SnowmobileShop.Models.RentalTime", b =>
-                {
-                    b.HasOne("SnowmobileShop.Models.RentalDay", "RentalDay")
-                        .WithMany("RentalHours")
-                        .HasForeignKey("RentalDayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RentalDay");
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.Snowmobile", b =>
@@ -319,21 +258,6 @@ namespace SnowmobileShop.Migrations
                         .HasForeignKey("SnowmobileShop.Models.Trip", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SnowmobileShop.Models.Order", b =>
-                {
-                    b.Navigation("ProductLines");
-                });
-
-            modelBuilder.Entity("SnowmobileShop.Models.Product", b =>
-                {
-                    b.Navigation("RentalDays");
-                });
-
-            modelBuilder.Entity("SnowmobileShop.Models.RentalDay", b =>
-                {
-                    b.Navigation("RentalHours");
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.ShoppingCart", b =>

@@ -7,24 +7,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SnowmobileShop.Models
 {
-    public class Snowmobile
+    public class Snowmobile : Product
     {
-        public int Id { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-
         [Required]
         [MaxLength(500)]
         public string Description { get; set; }
 
         [Required]
+        public decimal ListPrice { get; set; }
+
+        [Required]
+        [MaxLength(100)]
         public string Brand { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Model { get; set; }
 
         [Required]
+        [Range(1, 999)]
         public int Horsepower { get; set; }
 
         [Required]
@@ -37,7 +38,7 @@ namespace SnowmobileShop.Models
         public int YearOfProduction { get; set; }
 
         [Required]
-        [DisplayName("Snowmobile Type")]
+        [ForeignKey("SnowmobileTypeId")]
         public int SnowmobileTypeId { get; set; }
         public SnowmobileType SnowmobileType { get; set; }
 
