@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using SnowmobileShop.Models.ViewModels;
 
 namespace SnowmobileShop.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SnowmobileController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
@@ -140,6 +142,8 @@ namespace SnowmobileShop.Controllers
             if (dbSnowmobile != null)
             {
                 dbSnowmobile.Name = snowmobileVM.Snowmobile.Name;
+                dbSnowmobile.ListPrice = snowmobileVM.Snowmobile.ListPrice;
+                dbSnowmobile.Price = snowmobileVM.Snowmobile.Price;
                 dbSnowmobile.Description = snowmobileVM.Snowmobile.Description;
                 dbSnowmobile.Brand = snowmobileVM.Snowmobile.Brand;
                 dbSnowmobile.Model = snowmobileVM.Snowmobile.Model;
@@ -147,7 +151,9 @@ namespace SnowmobileShop.Controllers
                 dbSnowmobile.EngineCapacity = snowmobileVM.Snowmobile.EngineCapacity;
                 dbSnowmobile.YearOfProduction = snowmobileVM.Snowmobile.YearOfProduction;
                 dbSnowmobile.SnowmobileTypeId = snowmobileVM.Snowmobile.SnowmobileTypeId;
-                dbSnowmobile.ImageUrl = snowmobileVM.Snowmobile.ImageUrl;
+
+                if(snowmobileVM.Snowmobile.ImageUrl != null)
+                    dbSnowmobile.ImageUrl = snowmobileVM.Snowmobile.ImageUrl;
 
                 _dbContext.Snowmobiles.Update(dbSnowmobile);
                 _dbContext.SaveChanges();

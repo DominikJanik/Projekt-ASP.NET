@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SnowmobileShop.Data;
 using SnowmobileShop.Models;
 
 namespace SnowmobileShop.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SnowmobileTypeController : Controller
     {
         private readonly ApplicationDbContext _dbContext;

@@ -6,9 +6,9 @@ namespace SnowmobileShop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContext _dbContext;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(IApplicationDbContext context)
         {
             _dbContext = context;
         }
@@ -18,12 +18,6 @@ namespace SnowmobileShop.Controllers
             var snowmobiles = _dbContext.Snowmobiles.ToList();
 
             return View(snowmobiles);
-        }
-
-        public IActionResult Details(int id)
-        {
-            var snowmobile = _dbContext.Snowmobiles.Include("SnowmobileType").FirstOrDefault(x => x.Id == id);
-            return View(snowmobile);
         }
     }
 }
