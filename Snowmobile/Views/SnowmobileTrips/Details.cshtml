@@ -1,0 +1,229 @@
+﻿@model SnowmobileShop.Models.Trip
+
+@Html.AntiForgeryToken()
+
+<section class="d-flex align-items-center justify-content-center" style="padding-top: calc(0.2 * 100vh)">
+
+    <div class="row">
+        <div class="col-md-6">
+            <img class="card-img-top" src="@Model.ImageUrl" alt="..." />
+        </div>
+        <div class="col-md-6 my-auto">
+
+            <h1 class="display-5 fw-bolder">@Model.Name</h1>
+            <div class="fs-5 mb-5">
+                <span>@Model.Price.ToString("c")</span>
+            </div>
+            <p class="lead">@Model.Description</p>
+            <div class="d-flex">
+
+                <input type="hidden" value="@Model.Id" />
+                <div class="col-6">
+                    <button id="addToCart" class="btn btn-outline-dark flex-shrink-0">Add to cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <div id='calendar'></div>
+        <div id="rentalPanel"></div>
+    </div>
+</div>
+
+<hr class="featurette-divider">
+
+<div class="row featurette">
+    <div class="col-md-7">
+        <h2 class="featurette-heading fw-normal lh-1">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
+        <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+    </div>
+    <div class="col-md-5">
+        <img src="/img/head_snowmobiling.jpg" class="featurette-image mx-auto" width="500" height="250" />
+    </div>
+</div>
+
+<hr class="featurette-divider">
+
+<div class="row featurette">
+    <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading fw-normal lh-1">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
+        <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
+    </div>
+    <div class="col-md-5">
+        <img src="/img/polar_sky.jpg" class="featurette-image mx-auto" width="500" height="250" />
+    </div>
+</div>
+
+<hr class="featurette-divider">
+
+<div class="row featurette mb-4">
+    <div class="col-md-7">
+        <h2 class="featurette-heading fw-normal lh-1">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+        <p class="lead">And yes, this is the last block of representative placeholder content. Again, not really intended to be actually read, simply here to give you a better view of what this would look like with some actual content. Your content.</p>
+    </div>
+    <div class="col-md-5">
+        <img src="/img/instructor.jpg" class="featurette-image mx-auto" width="500" height="250" />
+    </div>
+</div>
+
+@section Scripts
+    {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script type="text/javascript">
+
+        const calendarEl = document.getElementById("calendar");
+        const rentalPanelEl = document.getElementById("rentalPanel");
+        const addToCartBtn = document.getElementById("addToCart");
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            calendarEl.style.visibility = 'hidden';
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: "dayGridMonth",
+                dateClick: async function (info) {
+                    const today = new Date().toISOString().split("T")[0];
+                    const check = info.dateStr;
+
+                    if (check < today) {
+                        rentalPanelEl.innerHTML = '<span class="text-danger">Cannot reserve past date.</span>';
+                    } else if (check == today) {
+                        rentalPanelEl.innerHTML = '<span class="text-danger">Please reserve your products at least one day before reservation.</span>';
+                    } else {
+                        rentalPanelEl.innerHTML = '<p class="text-center"><b>' + check + '</b><p>';
+
+                        let data = await dateInfoRequest(check, @Model.Hours);
+
+                        const list = makeRentalHoursList(data);
+
+                        rentalPanelEl.appendChild(list);
+
+                        let buttons = document.querySelectorAll('.btn-sm');
+
+                        for (const button of buttons) {
+                            button.addEventListener('click', function () {
+                                addToCartRequest(this.dataset.timeId)
+                                    .then((response) => {
+                                        if (response.status == 401) {
+                                            window.location.replace(window.location.origin + '/Identity/Account/Login');
+                                        } else {
+                                            window.location.replace(window.location.origin + '/ShoppingCart/');
+                                        }
+                                    });
+                            });
+                        }
+
+                        console.log(data);
+                    }
+                },
+            });
+
+            calendar.render();
+        });
+
+        addToCartBtn.addEventListener('click', toggleCalendar);
+
+        async function dateInfoRequest(selectedDate, rentalTimePeriod) {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]');
+            const url = window.location.origin + '/SnowmobileRental/GetDateInfo';
+
+            const requestOptions = {
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    RequestVerificationToken: token.value,
+                },
+                body: JSON.stringify({ Date: selectedDate, RentalTimePeriod: rentalTimePeriod, ProductId: @Model.Id }),
+                redirect: "manual",
+                referrerPolicy: "no-referrer",
+            };
+
+            const response = await fetch(url, requestOptions);
+
+            return response.json();
+        }
+
+        async function addToCartRequest(hourId) {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]');
+            const url = window.location.origin + '/ShoppingCart/AddToCart';
+
+            const requestOptions = {
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    RequestVerificationToken: token.value,
+                },
+                body: JSON.stringify({ ProductId: @Model.Id, HourId: hourId }),
+                redirect: "manual",
+                referrerPolicy: "no-referrer",
+            };
+
+            const response = await fetch(url, requestOptions);
+
+            return response;
+        }
+
+        function makeRentalHoursList(data) {
+            const main = document.createElement('ul');
+            main.classList.add('list-group')
+
+            for (const time of data.rentalHours) {
+                const li = document.createElement('li');
+                li.classList.add('list-group-item');
+                li.classList.add('list-group-item-action');
+
+
+
+                if (!time.isReserved) {
+                    const paragraph = document.createElement('p');
+                    paragraph.innerHTML = `From: ${time.from} To: ${time.to}`;
+                    li.appendChild(paragraph);
+
+                    const btn = document.createElement('button');
+                    btn.classList.add('btn', 'btn-sm', 'btn-dark');
+                    btn.innerHTML = "Add to cart";
+                    btn.dataset.timeId = time.id;
+                    li.appendChild(btn);
+                } else {
+                    const paragraph = document.createElement('p');
+                    paragraph.innerHTML = `From: ${time.from} To: ${time.to} RESERVED`;
+                    li.appendChild(paragraph);
+                    li.style.color = "red";
+                }
+
+
+                main.appendChild(li);
+            }
+
+            return main;
+        }
+
+        function toggleCalendar() {
+            console.log('click')
+
+            if (calendarEl.style.visibility == 'visible') {
+                calendarEl.style.visibility = 'hidden';
+                rentalPanelEl.style.display = 'none';
+                rentalPanelEl.innerHTML = '';
+                addToCartBtn.classList.remove('btn-dark');
+                addToCartBtn.classList.add('btn-outline-dark');
+            } else {
+                calendarEl.style.visibility = 'visible';
+                rentalPanelEl.style.display = 'block';
+                addToCartBtn.classList.remove('btn-outline-dark');
+                addToCartBtn.classList.add('btn-dark');
+            }
+        }
+    </script>
+}

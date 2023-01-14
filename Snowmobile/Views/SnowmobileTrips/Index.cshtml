@@ -1,0 +1,33 @@
+﻿@using SnowmobileShop.Models;
+@model IEnumerable<Trip>
+
+@{
+    ViewData["Title"] = "Rental";
+}
+
+<div class="row py-5">
+    @foreach (var trip in Model)
+    {
+        <div class="col-md-4 col-12 mb-4">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+
+                <a class="d-flex flex-column h-100 text-black text-shadow-1 text-decoration-none" asp-action="Details" asp-route-id="@trip.Id">
+                    <img class="mb-auto" src="@trip.ImageUrl" alt="@trip.Name image" />
+                    <h3 class="text-center fs-5 fw-bold m-0 mb-2">@trip.Name</h3>
+                    <ul class="d-flex list-unstyled justify-content-around">
+                        <li class="d-flex align-items-center me-3">
+                            <small class="text-success">Available</small>
+                        </li>
+                        <li class="d-flex align-items-center me-3">
+                            <small>@trip.Hours h</small>
+                        </li>
+                        <li class="d-flex align-items-center me-3">
+                            <small>@trip.Price.ToString("c")</small>
+                        </li>
+                    </ul>
+                </a>
+
+            </div>
+        </div>
+    }
+</div>

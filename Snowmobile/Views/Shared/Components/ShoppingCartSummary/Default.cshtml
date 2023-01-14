@@ -1,0 +1,16 @@
+﻿@using SnowmobileShop.Models;
+@model ShoppingCart
+
+
+<a class="nav-link text-dark" asp-controller="ShoppingCart" asp-action="Index">
+    <i class="bi bi-cart3"></i>
+    @if (Model != null && Model.Lines != null && Model.Lines.Any())
+    {
+        <small class="navbar-text">
+            <b>Your cart:</b>
+            @Model.Lines.Sum(x => x.Quantity) product(s)
+            @Model.TotalPrice.ToString("c")
+        </small>
+    }
+</a>
+

@@ -1,0 +1,58 @@
+﻿@using SnowmobileShop.Models.ViewModels;
+@model OrderViewModel
+
+<form method="post">
+    <div class="row">
+        <div class="col-6">
+            <h4>Your details:</h4>
+            <div class="form-floating mb-3">
+                <input asp-for="User.Forename" class="form-control" />
+                <label asp-for="User.Forename" class="form-label">Forename</label>
+                <span asp-validation-for="User.Forename" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="User.Surname" class="form-control" />
+                <label asp-for="User.Surname" class="form-label">Surname</label>
+                <span asp-validation-for="User.Surname" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="User.PhoneNumber" class="form-control" />
+                <label asp-for="User.PhoneNumber" class="form-label">PhoneNumber</label>
+                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="User.Email" class="form-control" />
+                <label asp-for="User.Email" class="form-label">Email</label>
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var line in Model.ShoppingCart.Lines)
+                    {
+                        <tr>
+                            <td>@line.Product.Name</td>
+                            <td>@(line.Product.Price.ToString("c"))</td>
+                            <td>@line.Quantity</td>
+                            <td>@($"{line.RentalTime.RentalDay.Date} {line.RentalTime.From} - {line.RentalTime.To}")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</form>

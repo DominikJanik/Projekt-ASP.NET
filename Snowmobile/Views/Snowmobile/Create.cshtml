@@ -10,6 +10,20 @@
     </div>
     <div class="row justify-content-center my-2">
         <div class="col-6">
+            <label asp-for="Snowmobile.ListPrice" class="form-label">ListPrice</label>
+            <input asp-for="Snowmobile.ListPrice" type="text" class="form-control" placeholder="" value="">
+            <span class="text-danger" asp-validation-for="Snowmobile.ListPrice"></span>
+        </div>
+    </div>
+    <div class="row justify-content-center my-2">
+        <div class="col-6">
+            <label asp-for="Snowmobile.Price" class="form-label">Price</label>
+            <input asp-for="Snowmobile.Price" type="text" class="form-control" placeholder="" value="">
+            <span class="text-danger" asp-validation-for="Snowmobile.Price"></span>
+        </div>
+    </div>
+    <div class="row justify-content-center my-2">
+        <div class="col-6">
             <label asp-for="Snowmobile.Description" class="form-label">Description</label>
             <textarea asp-for="Snowmobile.Description" type="text" class="form-control" placeholder="" value=""></textarea>
             <span class="text-danger" asp-validation-for="Snowmobile.Description"></span>
