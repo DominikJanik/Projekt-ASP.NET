@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnowmobileShop", "Snowmobile\SnowmobileShop.csproj", "{D2E2A5B0-0165-4ADF-9C2B-91DD39A59298}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnowmobileShop", "Snowmobile\SnowmobileShop.csproj", "{D2E2A5B0-0165-4ADF-9C2B-91DD39A59298}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnowmobileShop.Tests", "SnowmobileShop.Tests\SnowmobileShop.Tests.csproj", "{FF3AF904-CF81-4D84-9D54-8C93CAD43C66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D2E2A5B0-0165-4ADF-9C2B-91DD39A59298}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2E2A5B0-0165-4ADF-9C2B-91DD39A59298}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2E2A5B0-0165-4ADF-9C2B-91DD39A59298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF3AF904-CF81-4D84-9D54-8C93CAD43C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF3AF904-CF81-4D84-9D54-8C93CAD43C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF3AF904-CF81-4D84-9D54-8C93CAD43C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF3AF904-CF81-4D84-9D54-8C93CAD43C66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
