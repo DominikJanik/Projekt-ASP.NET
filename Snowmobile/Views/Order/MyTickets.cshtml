@@ -1,0 +1,34 @@
+﻿@using SnowmobileShop.Models;
+@model IEnumerable<Order>
+
+@if(Model.Count() <= 0)
+{
+    <h2>You have no tickets.</h2>
+}
+else
+{
+    @foreach (var order in Model)
+    {
+        <ul class="list-group mb-4">
+            <li class="list-group-item">
+                Your ticket id: @order.Id
+            </li>
+            @foreach (var line in order.ProductLines)
+            {
+                <li class="list-group-item">
+                    Name: @line.Product.Name
+                </li>
+                <li class="list-group-item">
+                    Price: @line.Product.Price.ToString("c") <br />
+                    Quantity: @line.Quantity <br />
+                </li>
+                <li class="list-group-item">
+                    Date: (@line.RentalTime.RentalDay.Date) @line.RentalTime.From - @line.RentalTime.To
+                </li>
+            }
+            <li class="list-group-item">
+                Total: @order.TotalPrice.ToString("c")
+            </li>
+        </ul>
+    }
+}

@@ -106,7 +106,7 @@ namespace SnowmobileShop.Controllers
             return View("Success", order);
         }
 
-        public IActionResult MyOrders()
+        public IActionResult MyTickets()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
