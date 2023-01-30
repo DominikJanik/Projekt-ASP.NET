@@ -20,6 +20,10 @@ If you are using Visual Studio you can just launch the project.
 ## Running the tests
 You can run unit tests with .NET CLI with `dotnet test` command.
 
+## Accounts
+Login: admin
+Password: Password$1
+
 ## Author
 
 **Dominik Janik**
