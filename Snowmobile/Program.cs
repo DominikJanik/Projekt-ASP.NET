@@ -13,7 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<JsonOptions>(options =>
 {
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.SerializerOptions.Converters.Add(new DateOnlyJsonConverter());
 });
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+});
+
 
 builder.Services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 

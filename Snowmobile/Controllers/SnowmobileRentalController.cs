@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Common;
-using NuGet.Protocol;
 using SnowmobileShop.Data;
 using SnowmobileShop.Models;
 using SnowmobileShop.Services;

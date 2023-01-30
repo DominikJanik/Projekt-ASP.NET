@@ -15,7 +15,7 @@ namespace SnowmobileShop.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.13");
 
             modelBuilder.Entity("SnowmobileShop.Models.Order", b =>
                 {
@@ -47,7 +47,7 @@ namespace SnowmobileShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.Product", b =>
@@ -65,9 +65,7 @@ namespace SnowmobileShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
-
-                    b.UseTptMappingStrategy();
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.ProductLine", b =>
@@ -101,7 +99,7 @@ namespace SnowmobileShop.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("ProductLines");
+                    b.ToTable("ProductLines", (string)null);
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.RentalDay", b =>
@@ -120,7 +118,7 @@ namespace SnowmobileShop.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("RentalDays");
+                    b.ToTable("RentalDays", (string)null);
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.RentalTime", b =>
@@ -151,7 +149,7 @@ namespace SnowmobileShop.Migrations
 
                     b.HasIndex("RentalDayId");
 
-                    b.ToTable("RentalHours");
+                    b.ToTable("RentalHours", (string)null);
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.ShoppingCart", b =>
@@ -168,7 +166,7 @@ namespace SnowmobileShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.SnowmobileType", b =>
@@ -184,7 +182,7 @@ namespace SnowmobileShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SnowmobileTypes");
+                    b.ToTable("SnowmobileTypes", (string)null);
                 });
 
             modelBuilder.Entity("SnowmobileShop.Models.Snowmobile", b =>
@@ -235,6 +233,7 @@ namespace SnowmobileShop.Migrations
                     b.HasBaseType("SnowmobileShop.Models.Product");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Hours")
